@@ -2,18 +2,15 @@ package com.example.reportlistsystem
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AlertDialog
-import android.content.DialogInterface
 import com.example.reportlistsystem.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,19 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            var builder = AlertDialog.Builder(this)
-            builder.setTitle("Agregar reporte")
-            builder.setMessage("¿Desea agregar un reporte?")
-            builder.setPositiveButton("Si", DialogInterface.OnClickListener { dialog, which ->
-                Snackbar.make(view, "Reporte agregado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
-            })
-            builder.setNegativeButton("No", DialogInterface.OnClickListener { dialog, which ->
-                Snackbar.make(view, "Reporte no agregado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
-            })
-            builder.show()
+        binding.appBarMain.fab.setOnClickListener {
+            val navController = findNavController(R.id.nav_host_fragment_content_main)
+            navController.navigate(R.id.nav_add_user)
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -48,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
+            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
